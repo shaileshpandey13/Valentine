@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Panda 🐼❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Indie+Flower&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #ffafbd;
+            --rose: #ffc3a0;
+            --dark-pink: #ff4b2b;
+            --paper: #fffef0;
+        }
+
+        body {
+            margin: 0; height: 100vh; display: flex; justify-content: center; align-items: center;
+            background: linear-gradient(135deg, var(--pink), var(--rose));
+            font-family: 'Poppins', sans-serif; overflow: hidden; text-align: center;
+        }
+
+        /* Entry Screen */
+        #entryOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--pink), var(--rose));
+            z-index: 1000; display: flex; justify-content: center; align-items: center;
+            flex-direction: column; color: white; transition: opacity 0.8s ease;
+        }
+
+        .heart-loader { font-size: 80px; margin-bottom: 20px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        .enter-btn {
+            padding: 15px 40px; font-size: 1.2rem; background: white; color: var(--dark-pink);
+            border: none; border-radius: 50px; cursor: pointer; font-weight: bold;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: 0.3s;
+        }
+
+        /* Floating Elements */
+        .heart { position: absolute; pointer-events: none; z-index: 0; animation: float 5s linear infinite; }
+        @keyframes float {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Main Question Card */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            z-index: 10; max-width: 400px; width: 90%; display: none;
+        }
+
+        .btn-group { margin-top: 30px; display: flex; justify-content: center; align-items: center; gap: 20px; min-height: 100px; }
+        #yesBtn { background-color: var(--dark-pink); color: white; padding: 15px 30px; font-size: 1.2rem; border-radius: 50px; border:none; cursor:pointer; font-weight:bold; z-index: 20; transition: transform 0.2s; }
+        #noBtn { background-color: #eee; color: #333; padding: 10px 25px; border-radius: 50px; border:none; cursor:pointer; position: relative; }
+
+        /* Photo Carousel */
+        .carousel-container { position: relative; width: 85%; margin: 0 auto 25px; height: 260px; cursor: pointer; }
+        .photo-frame {
+            position: absolute; width: 100%; background: white; padding: 10px 10px 30px 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: all 0.5s ease;
+        }
+        .photo-frame img { width: 100%; height: 180px; object-fit: cover; border-radius: 2px; }
+        .photo-frame p { font-family: 'Indie Flower', cursive; margin: 10px 0 0; font-weight: bold; font-size: 0.85rem; color: #333; }
+
+        /* Letter Aesthetic */
+        #letter {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: var(--paper); background-image: radial-gradient(#f0eada 1px, transparent 0);
+            background-size: 20px 20px; padding: 25px; border-radius: 5px;
+            box-shadow: 5px 5px 0px #dcd7c0, 15px 15px 40px rgba(0,0,0,0.2);
+            width: 85%; max-width: 420px; z-index: 100; max-height: 90vh; overflow-y: auto;
+            border-left: 2px solid #e0d8c0;
+        }
+
+        .letter-content h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #444; margin: 5px 0; }
+        .letter-content p { font-family: 'Indie Flower', cursive; font-size: 1.15rem; line-height: 1.4; color: #555; margin-bottom: 10px; }
+
+        /* Reasons Grid (Interactive) */
+        .reasons-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0; }
+        .reason-tag { 
+            background: #fff0f0; border: 1px solid var(--dark-pink); color: var(--dark-pink); 
+            padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
+        }
+        .reason-tag:hover {
+            background: var(--dark-pink); color: white;
+            transform: scale(1.15) rotate(2deg);
+            box-shadow: 0 5px 15px rgba(255, 75, 43, 0.3);
+        }
+
+        /* Love Timer */
+        #timer-section { margin: 15px 0; padding: 12px; background: rgba(255, 175, 189, 0.1); border-radius: 15px; border: 1px dashed var(--dark-pink); }
+        .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 5px; }
+        .timer-value { font-weight: bold; color: var(--dark-pink); font-size: 1.1rem; }
+        .timer-label { font-size: 0.65rem; text-transform: uppercase; color: #888; font-weight: bold; }
+
+        .hug-btn { background: linear-gradient(45deg, #ff4b2b, #ff416c); color: white; padding: 15px; border-radius: 50px; width: 100%; border:none; font-weight:bold; cursor:pointer; margin-top: 10px; font-size: 1rem; }
+
+        /* Video Overlay */
+        #videoOverlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 200; justify-content: center; align-items: center; flex-direction: column;
+        }
+        #hugVideo { width: 85%; max-width: 320px; border: 5px solid white; border-radius: 15px; }
+        .close-video { color: white; margin-top: 20px; background: var(--dark-pink); padding: 12px 25px; border-radius: 50px; border:none; cursor:pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div id="entryOverlay">
+        <div class="heart-loader">🐼</div>
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem;">For my Panda...</h2>
+        <button class="enter-btn" onclick="unlockEverything()">Open your surprise</button>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://dl.dropboxusercontent.com/scl/fi/qvtx7ldi761atpu33yn8m/Ed-Sheeran-Perfect.mp3?rlkey=6vfhp9o9u2avz0nbcujb1i8ih&raw=1" type="audio/mpeg">
+    </audio>
+
+    <div class="container" id="mainCard">
+        <h1>Will you be my Valentine? 🌹</h1>
+        <p>I have something to show you...</p>
+        <div class="btn-group">
+            <button id="yesBtn" onclick="revealLetter()">Yes!</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        </div>
+    </div>
+
+    <div id="letter">
+        <div class="carousel-container" onclick="rotatePhotos()">
+            <div class="photo-frame" style="transform: rotate(-2deg); z-index: 4;">
+                <img src="https://dl.dropboxusercontent.com/scl/fi/yzx0uwp0egubpstkmdcho/pic1.jpg?rlkey=7eumxpye2nrxstr1cdq2udaf6&raw=1" alt="Us 1">
+                <p>Tap to see more memories 📸</p>
+            </div>
+            <div class="photo-frame" style="transform: rotate(3deg); z-index: 3;">
+                <img src="https://dl.dropboxusercontent.com/scl/fi/fzoj65ziv8fkd07y8ssse/pic2.jpg?rlkey=l736416hseaio5pbzdl79szsc&raw=1" alt="Us 2">
+                <p>Every moment with you is a gift...</p>
+            </div>
+            <div class="photo-frame" style="transform: rotate(-4deg); z-index: 2;">
+                <img src="https://dl.dropboxusercontent.com/scl/fi/sfza9v54umjmvvofznlvf/pic3.jpg?rlkey=uu950vo4bt2loico79js5cdxa&raw=1" alt="Us 3">
+                <p>My favorite person ❤️</p>
+            </div>
+            <div class="photo-frame" style="transform: rotate(2deg); z-index: 1;">
+                <img src="https://dl.dropboxusercontent.com/scl/fi/ibgsbyxwp973pqsg1j80k/pic4.jpg?rlkey=x1z12bgil792csczsnm5rh9la&raw=1" alt="Us 4">
+                <p>I love you to the moon and back 🌙</p>
+            </div>
+        </div>
+
+        <div class="letter-content">
+            <h2>Hey Panda,</h2>
+            <p>Every second with you is my favorite second. I love you for so many reasons:</p>
+            
+            <div class="reasons-grid">
+                <div class="reason-tag">🐼 Best Cuddler</div>
+                <div class="reason-tag">😊 Your Smile</div>
+                <div class="reason-tag">✨ Your Kindness</div>
+                <div class="reason-tag">💖 My Everything</div>
+                <div class="reason-tag">🌸 Beautiful Soul</div>
+                <div class="reason-tag">🥰 Best Partner</div>
+            </div>
+
+            <div id="timer-section">
+                <p style="font-size: 0.85rem; margin: 0; color: #666; font-weight: bold;">Time spent together:</p>
+                <div class="timer-grid">
+                    <div class="timer-unit"><span id="days" class="timer-value">0</span><span class="timer-label">Days</span></div>
+                    <div class="timer-unit"><span id="hours" class="timer-value">0</span><span class="timer-label">Hrs</span></div>
+                    <div class="timer-unit"><span id="mins" class="timer-value">0</span><span class="timer-label">Min</span></div>
+                    <div class="timer-unit"><span id="secs" class="timer-value">0</span><span class="timer-label">Sec</span></div>
+                </div>
+            </div>
+
+            <button class="hug-btn" onclick="showVideo()">Click for a Virtual Hug 🤗</button>
+        </div>
+    </div>
+
+    <div id="videoOverlay">
+        <video id="hugVideo" playsinline>
+            <source src="https://dl.dropboxusercontent.com/scl/fi/fv4qomj9f012gwyplw6hk/WhatsApp-Video-2026-02-06-at-12.04.40-AM.mp4?rlkey=7le9aybs4umbnyfxzmq2jjb1y&raw=1" type="video/mp4">
+        </video>
+        <button class="close-video" onclick="closeVideo()">Back to Letter ❤️</button>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const video = document.getElementById('hugVideo');
+        let noScale = 1; let yesScale = 1;
+        const startDate = new Date('2025-04-25T00:00:00');
+
+        function unlockEverything() {
+            audio.play().catch(() => console.log("Music ready"));
+            document.getElementById('entryOverlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('entryOverlay').style.display = 'none';
+                document.getElementById('mainCard').style.display = 'block';
+            }, 800);
+        }
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            if (noScale > 0.3) noScale -= 0.1;
+            yesScale += 0.15;
+            noBtn.style.transform = `scale(${noScale})`;
+            yesBtn.style.transform = `scale(${yesScale})`;
+            const x = Math.random() * (window.innerWidth - 120);
+            const y = Math.random() * (window.innerHeight - 120);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px'; noBtn.style.top = y + 'px';
+        }
+
+        function rotatePhotos() {
+            const container = document.querySelector('.carousel-container');
+            const topFrame = container.lastElementChild;
+            topFrame.style.transform = 'translateX(-120%) rotate(-15deg)';
+            topFrame.style.opacity = '0';
+            setTimeout(() => {
+                container.prepend(topFrame);
+                topFrame.style.opacity = '1';
+                topFrame.style.transform = `rotate(${(Math.random() * 10) - 5}deg)`;
+                const newFrames = container.querySelectorAll('.photo-frame');
+                newFrames.forEach((f, i) => f.style.zIndex = i);
+            }, 500);
+        }
+
+        function updateTimer() {
+            const diff = new Date() - startDate;
+            document.getElementById('days').innerText = Math.floor(diff / 86400000);
+            document.getElementById('hours').innerText = Math.floor((diff / 3600000) % 24);
+            document.getElementById('mins').innerText = Math.floor((diff / 60000) % 60);
+            document.getElementById('secs').innerText = Math.floor((diff / 1000) % 60);
+        }
+
+        function revealLetter() {
+            document.getElementById('mainCard').style.display = 'none';
+            document.getElementById('letter').style.display = 'block';
+            setInterval(updateTimer, 1000);
+            updateTimer();
+            for(let i=0; i<60; i++) setTimeout(createHearts, i * 50);
+        }
+
+        function showVideo() {
+            audio.pause();
+            document.getElementById('videoOverlay').style.display = 'flex';
+            video.play();
+        }
+
+        function closeVideo() {
+            document.getElementById('videoOverlay').style.display = 'none';
+            video.pause();
+            audio.play();
+        }
+
+        function createHearts() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = ['❤️','💖','🐼','✨'][Math.floor(Math.random()*4)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHearts, 800);
+    </script>
+</body>
+</html>
