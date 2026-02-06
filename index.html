@@ -36,7 +36,7 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: 0.3s;
         }
 
-        /* Floating Elements */
+        /* Floating Hearts */
         .heart { position: absolute; pointer-events: none; z-index: 0; animation: float 5s linear infinite; }
         @keyframes float {
             0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
@@ -55,12 +55,12 @@
         #noBtn { background-color: #eee; color: #333; padding: 10px 25px; border-radius: 50px; border:none; cursor:pointer; position: relative; }
 
         /* Photo Carousel */
-        .carousel-container { position: relative; width: 85%; margin: 0 auto 25px; height: 260px; cursor: pointer; }
+        .carousel-container { position: relative; width: 85%; margin: 10px auto 40px; height: 280px; cursor: pointer; }
         .photo-frame {
             position: absolute; width: 100%; background: white; padding: 10px 10px 30px 10px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: all 0.5s ease;
         }
-        .photo-frame img { width: 100%; height: 180px; object-fit: cover; border-radius: 2px; }
+        .photo-frame img { width: 100%; height: 190px; object-fit: cover; border-radius: 2px; }
         .photo-frame p { font-family: 'Indie Flower', cursive; margin: 10px 0 0; font-weight: bold; font-size: 0.85rem; color: #333; }
 
         /* Letter Aesthetic */
@@ -73,7 +73,20 @@
             border-left: 2px solid #e0d8c0;
         }
 
-        .letter-content h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #444; margin: 5px 0; }
+        /* NEW Header styling for the top of the letter */
+        .letter-header {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: var(--dark-pink);
+            margin: 0 0 15px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .letter-content {
+            margin-top: 20px; 
+            padding-top: 10px;
+        }
+        .letter-content h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #444; margin: 15px 0 10px; }
         .letter-content p { font-family: 'Indie Flower', cursive; font-size: 1.15rem; line-height: 1.4; color: #555; margin-bottom: 10px; }
 
         /* Reasons Grid (Interactive) */
@@ -128,10 +141,12 @@
     </div>
 
     <div id="letter">
+        <h1 class="letter-header">Our Memories 📸</h1>
+
         <div class="carousel-container" onclick="rotatePhotos()">
             <div class="photo-frame" style="transform: rotate(-2deg); z-index: 4;">
                 <img src="https://dl.dropboxusercontent.com/scl/fi/yzx0uwp0egubpstkmdcho/pic1.jpg?rlkey=7eumxpye2nrxstr1cdq2udaf6&raw=1" alt="Us 1">
-                <p>Thank you for being my best friend and my love ❤️</p>
+                <p>Thank you for being my best friend and my everything ❤️</p>
                 <p>Tap to see more memories 📸</p>
             </div>
             <div class="photo-frame" style="transform: rotate(3deg); z-index: 3;">
